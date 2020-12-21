@@ -41,7 +41,8 @@ public class CustomerController {
 	}
 
 	@GetMapping("/customers/{customerId}")
-	public ResponseEntity<Customer> getEmployee(@PathVariable Long customerId) throws ResourceNotFoundException {
+	public ResponseEntity<Customer> getEmployee(@PathVariable(value = "customerId") long customerId)
+			throws ResourceNotFoundException {
 		Customer coustomerEntity = customerService.getCustomer(customerId);
 		return new ResponseEntity<Customer>(coustomerEntity, new HttpHeaders(), HttpStatus.OK);
 	}
@@ -53,7 +54,7 @@ public class CustomerController {
 	}
 
 	@PutMapping("/customers/{id}")
-	public ResponseEntity<?> update(@RequestBody Customer customer, @PathVariable long id) {
+	public ResponseEntity<?> update(@PathVariable(value = "id") long id, @RequestBody Customer customer) {
 		try {
 			Customer existCustomer = customerService.getCustomer(id);
 			if (existCustomer.getCustomerId().equals(id)) {
